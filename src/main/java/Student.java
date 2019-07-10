@@ -1,16 +1,45 @@
 public class Student {
-    public String speak(int num) {
-        if (num % 3 == 0) {
-            return "Fizz";
-        }
+    private int position;
 
-        if (num % 5 == 0) {
-            return "Buzz";
-        }
+    private static final String FIZZ_STRING = "Fizz";
+    private static final String BUZZ_STRING = "Buzz";
+    private static final String WHIZZ_STRING = "Whizz";
+    private static final String SPECIAL_NUM = "3";
 
-        if (7 == num) {
-            return "Whizz";
+    Student(int position) {
+        this.position = position;
+    }
+
+    public String speak() {
+
+        if (!inAbnormalPosition(this)) {
+            return String.valueOf(position);
+        } else if (isPositionSpecial(this)) {
+            return FIZZ_STRING;
+        } else {
+            StringBuilder speakBuilder = new StringBuilder();
+            if (canBeDividedBy(3)) {
+                speakBuilder.append(FIZZ_STRING);
+            }
+            if (canBeDividedBy(5)) {
+                speakBuilder.append(BUZZ_STRING);
+            }
+            if (canBeDividedBy(7)) {
+                speakBuilder.append(WHIZZ_STRING);
+            }
+            return speakBuilder.toString();
         }
-        return String.valueOf(num);
+    }
+
+    private boolean inAbnormalPosition(Student student) {
+        return student.canBeDividedBy(3) || canBeDividedBy(5) || canBeDividedBy(7) || isPositionSpecial(student);
+    }
+
+    private boolean isPositionSpecial(Student student) {
+        return String.valueOf(student.position).contains(SPECIAL_NUM);
+    }
+
+    private boolean canBeDividedBy(int divider) {
+        return position % divider == 0;
     }
 }
